@@ -50,6 +50,8 @@ tests:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
+    build-tools:
+      - hspec-discover
     dependencies:
       - fused-effects-logger
       - directory
