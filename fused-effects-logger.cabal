@@ -9,14 +9,24 @@ version:        0.0.0.0
 synopsis:       Logger effect for the `fused-effects` library
 description:    A logger effect for the `fused-effects` library based on the `monad-logger` api.
 category:       Effect
+homepage:       https://github.com/drlkf/fused-effects-logger
+bug-reports:    https://github.com/drlkf/fused-effects-logger/issues
 author:         drlkf
 maintainer:     drlkf@drlkf.net
 copyright:      2025 drlkf
 license:        GPL-3
 license-file:   LICENSE
 build-type:     Simple
+tested-with:
+    GHC == 9.10
+  , GHC == 9.8
+  , GHC == 9.6
 extra-source-files:
     README.md
+
+source-repository head
+  type: git
+  location: https://github.com/haskell-github-trust/megaparsec-time
 
 library
   exposed-modules:
