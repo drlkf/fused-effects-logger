@@ -1,9 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Control.Carrier.Logger.IOSpec (
   spec,
 ) where
 
+import Control.Exception (try, IOException)
 import Control.Carrier.Lift (runM)
 import Control.Carrier.Logger.IO (runLoggerIO, singleHandle)
 import Control.Monad.Logger (logDebugN, logInfoN, logWarnN)
@@ -17,7 +19,7 @@ spec = do
         (fp, h) <- openTempFile "." "LoggerIOC.log"
         _ <- runM (runLoggerIO (singleHandle h) action)
         hClose h
-        readFile fp <* removePathForcibly fp
+        readFile fp <* (try @IOException (removePathForcibly fp))
 
   describe "LoggerIOC" $ do
     it "no log" $ do
