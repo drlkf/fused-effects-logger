@@ -6,9 +6,9 @@ author:       drlkf
 maintainer:   drlkf@drlkf.net
 copyright:    2025 drlkf
 category:     Effect
-github:       haskell-github-trust/megaparsec-time
-homepage:     https://github.com/drlkf/fused-effects-logger
-bug-reports:  https://github.com/drlkf/fused-effects-logger/issues
+github:       haskell-github-trust/fused-effects-logger
+homepage:     https://github.com/haskell-github-trust/fused-effects-logger
+bug-reports:  https://github.com/haskell-github-trust/fused-effects-logger/issues
 tested-with:
   - GHC == 9.10
   - GHC == 9.8
