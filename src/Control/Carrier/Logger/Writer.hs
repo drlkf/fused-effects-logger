@@ -7,6 +7,11 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+-- | A pure carrier for the 'Logger' effect, using an underlying 'Writer'
+-- effect.
+--
+-- >>> length (fst (run (runLoggerW (logDebugN "1" >> logDebugN "2" >> logWarnN "3"))))
+-- 3
 module Control.Carrier.Logger.Writer (
   LoggerWriterC (..),
   runLoggerW,

@@ -7,10 +7,19 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+-- | An IO carrier for the 'Logger' effect that writes logs to a 'Handle'
+-- selected by the provided function.
 module Control.Carrier.Logger.IO (
+  LoggerIOC (LoggerIOC),
+
+  -- * Helpers
   HandleSelector,
   singleHandle,
+
+  -- * Carrier implementation
   runLoggerIO,
+  runStdoutLoggerIO,
+  runStderrLoggerIO,
 ) where
 
 import Control.Algebra (Algebra (..), (:+:) (..))
@@ -28,7 +37,7 @@ import Control.Monad.Logger (
   fromLogStr,
  )
 import qualified Data.ByteString.Char8 as B (hPutStr)
-import System.IO (Handle)
+import System.IO (Handle, stderr, stdout)
 
 -- | Algebra for a simple IO logger. The inner function allows for selecting a
 -- 'Handle' according to something like 'LogLevel'.
@@ -39,7 +48,10 @@ newtype LoggerIOC f m a = LoggerIOC
 
 type HandleSelector = Loc -> LogSource -> LogLevel -> LogStr -> Handle
 
-singleHandle :: Handle -> HandleSelector
+-- | Helper to run IO loggers by writing to the same 'Handle' every time.
+singleHandle
+  :: Handle
+  -> HandleSelector
 singleHandle h _ _ _ _ = h
 
 instance
@@ -60,9 +72,22 @@ instance
           )
     R other -> LoggerIOC (alg (runLoggerIOC . hdl) (R other) ctx)
 
--- | Run a logger by writing to a 'Handle'.
+-- | Run logger, writing to a 'Handle' selected by a function @f@.
 runLoggerIO
   :: HandleSelector
+  -- ^ @f@
   -> LoggerIOC HandleSelector m a
   -> m a
 runLoggerIO f = runReader f . runLoggerIOC
+
+-- | Run logger, writing everything to 'stdout'.
+runStdoutLoggerIO
+  :: LoggerIOC HandleSelector m a
+  -> m a
+runStdoutLoggerIO = runLoggerIO (singleHandle stdout)
+
+-- | Run logger, writing everything to 'stderr'.
+runStderrLoggerIO
+  :: LoggerIOC HandleSelector m a
+  -> m a
+runStderrLoggerIO = runLoggerIO (singleHandle stderr)
