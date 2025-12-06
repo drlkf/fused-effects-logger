@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           fused-effects-logger
-version:        0.0.0.0
+version:        0.0.1.0
 synopsis:       Logger effect for the `fused-effects` library
 description:    A logger effect for the `fused-effects` library based on the `monad-logger` api.
 category:       Effect
