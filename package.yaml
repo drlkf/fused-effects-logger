@@ -55,5 +55,6 @@ tests:
     dependencies:
       - fused-effects-logger
       - directory
+      - filepath
       - ghc-prim
       - hspec
