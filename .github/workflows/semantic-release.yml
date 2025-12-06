@@ -1,6 +1,9 @@
 ---
 name: Semantic release
-if: false
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:

@@ -30,12 +30,6 @@ export default {
             }
         ],
         [
-            "@semantic-release/exec",
-            {
-                "generateNotesCmd": "./bin/run-dch ${lastRelease.version} ${nextRelease.version}"
-            }
-        ],
-        [
             "@semantic-release/git",
             {
                 "assets": [
